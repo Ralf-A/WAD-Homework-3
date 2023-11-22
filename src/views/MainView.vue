@@ -1,5 +1,25 @@
+
+<!-- MainPage.vue -->
 <template>
-    <div class="main">
-        <h1>This is Main View</h1>
+    <div>
+      <div class="main-content">
+      </div>
     </div>
-</template>
+  </template>
+  
+  <script>
+  import Header from "@/components/Header.vue";
+  import Footer from "@/components/Footer.vue";
+  
+  export default {
+    components: {
+      Header,
+      Footer,
+  }
+};
+  </script>
+  
+  <style>
+  /* Add your styling here */
+  </style>
+  
