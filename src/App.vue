@@ -1,4 +1,7 @@
 <template>
+  <header>
+    <h1>here's header</h1>
+  </header>
   <nav>
     | <router-link to="/">SignUp</router-link> |
     <router-link to="/main">Main</router-link> |
