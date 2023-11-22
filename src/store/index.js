@@ -1,46 +1,30 @@
-import { createStore } from 'vuex'
+// store.js
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-export default createStore({
-    strict: true,
-    state: {
-        productList: [
-            { id: 1, author: "Charlotte Bronte", book: "Jane Eyre", goodreads: "4.1/5", price: 20 },
-            { id: 2, author: "Margaret Mitchell", book: "Gone with the Wind", goodreads: "4.3/5", price: 22 },
-            { id: 3, author: "Anthony Burgess", book: "A Clockwork Orange", goodreads: "4/5", price: 13 },
-            { id: 4, author: "Fyodor Dostoevsky", book: "Crime and Punishment", goodreads: "4.2/5", price: 18 }
-        ]
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    posts: [],
+  },
+  mutations: {
+    setPosts(state, posts) {
+      state.posts = posts;
     },
-    getters: {
-        productListsale: state => {
-            var productListsale = state.productList.map(product => {
-                return {
-                    id: product.id,
-                    author: product.author,
-                    price: product.price / 2 + " -  Sale",
-                    book: product.book,
-                    goodreads: product.goodreads
-                }
-            });
-            return productListsale
-        }
+  },
+  actions: {
+    fetchPosts({ commit }) {
+      // Fetch posts from API and commit mutation
+      fetch('https://gist.githubusercontent.com/Ralf-A/bd247c4126a4af73edb3fd21c4e8e22f/raw/data.json')
+        .then(response => response.json())
+        .then(data => {
+          commit('setPosts', data.posts);
+        })
+        .catch(error => console.error('Error fetching posts:', error));
     },
-    mutations: {
-        IncreasePrice: state => {
-            state.productList.forEach(product => {
-                product.price += 1;
-            })
-        },
-        DecreasePrice: state => {
-            state.productList.forEach(product => {
-                product.price -= 1;
-            })
-        }
-    },
-    actions: {
-        DecreasePriceAct: act => {
-            setTimeout(function() {
-                act.commit("DecreasePrice")
-            }, 100)
-        }
-    }
-})
+  },
+  getters: {
+    // Any additional getters for post-related logic
+  },
+});
