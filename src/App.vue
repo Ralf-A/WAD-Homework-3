@@ -1,4 +1,4 @@
-<template>
+
     <div id="app">
       <Header />
       <router-view />
@@ -26,4 +26,3 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
   }
   </style>
-    
