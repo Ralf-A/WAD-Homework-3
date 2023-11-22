@@ -1,9 +1,9 @@
 <!-- Header.vue -->
 <template>
-    <nav>
+    <Header>
       | <router-link to="/">SignUp</router-link> |
       <router-link to="/main">Main</router-link> |
-    </nav>
+    </Header>
     <router-view/>
   </template>
   
