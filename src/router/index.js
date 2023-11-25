@@ -1,6 +1,6 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import SignUpView from '../views/SignUpView.vue'
-import MainView from '../views/MainView.vue'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import SignUpView from '../views/SignUpView.vue';
+import MainView from '../views/MainView.vue';
 
 const routes = [{
         path: '/',
@@ -17,6 +17,6 @@ const routes = [{
 const router = createRouter({
     history: createWebHashHistory(),
     routes
-})
-
-export default router
+  });
+  
+export default router;

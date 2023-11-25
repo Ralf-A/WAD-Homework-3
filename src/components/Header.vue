@@ -2,41 +2,35 @@
 <template>
     <header>
         <nav>
-            | <router-link to="/">Sign Up</router-link> |
-            <router-link to="/main">Main</router-link> |
+            <router-link to="/">Log In</router-link>
+            <router-link to="/main">Home</router-link>
         </nav>
     </header>
 </template>
-  
-<script>
-export default {
-    // Add any necessary logic or styling here
-};
-</script>
-  
-  
 
-<style>
-#app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-}
+<style scoped>
 
 nav {
+    text-align: center;
     padding: 30px;
 }
 
 nav a {
     font-weight: bold;
-    color: #2c3e50;
+    margin: 0px 10px 0px 10px;
+    padding: 10px 40px 10px 40px;
+    color: #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
+    border-radius: 4px;
+    transition: background-color 0.3s; /* Add transition for a smooth effect */
+}
+
+nav a:hover {
+    background-color: #ddd; /* Add a slight gray background on hover */
 }
 
 nav a.router-link-exact-active {
-    color: #42b983;
+    color: rgb(32, 248, 237);
 }
-</style>
 
-  
+</style>
