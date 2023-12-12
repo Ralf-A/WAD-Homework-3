@@ -13,15 +13,6 @@
         <p class="post-info">
           <strong>Date:</strong> {{ post.date }}
         </p>
-        <div class="post-footer">
-          <button @click="incrementLikes" class="like-button">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Facebook_Like_button.svg/1024px-Facebook_Like_button.svg.png"
-              alt="Like Button"
-            />
-          </button>
-          <p class="likes-count">{{ post.likes }} Likes</p>
-        </div>
       </div>
     </div>
   </li>
@@ -34,12 +25,6 @@ export default {
     post: {
       type: Object,
       required: true,
-    },
-  },
-  methods: {
-    incrementLikes() {
-      // Updates the likes directly in the post object
-      this.post.likes += 1;
     },
   },
 };
@@ -109,28 +94,5 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   padding: 16px;
-}
-
-.like-button {
-  margin-top: 8px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-}
-
-.like-button img {
-  width: 30px;
-  height: 30px;
-}
-
-.likes-count {
-  margin-top: 8px;
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
 }
 </style>
