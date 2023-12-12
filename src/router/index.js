@@ -1,6 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import SignUpView from '../views/SignUpView.vue';
-import MainView from '../views/MainView.vue';
+import { createRouter, createWebHashHistory } from "vue-router";
+import MainView from "../views/MainView.vue";
+import SignUp from "../views/SignUp.vue";
+import LogIn from "../views/LogIn.vue";
+import auth from "../auth";
 
 const routes = [{
     path: "/signup",
