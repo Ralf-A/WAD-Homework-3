@@ -1,8 +1,9 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import MainView from "../views/MainView.vue";
 import SignUp from "../views/SignUp.vue";
-import LogIn from "../views/LogInView.vue";
+import LogIn from "../views/LogIn.vue";
 import ContactUs from "../views/ContactUs.vue";
+import addPost from "../views/addPostView.vue";
 import auth from "../auth";
 
 const routes = [
@@ -22,9 +23,15 @@ const routes = [
         component: ContactUs,
     },
     {
+        path: "/addpost",
+        name: "AddPost",
+        component: addPost,
+    },
+    {
         path: "/",
         name: "main",
         component: MainView,
+        /*
         beforeEnter: async (to, from, next) => {
             let authResult = await auth.authenticated();
             if (!authResult) {
@@ -33,6 +40,7 @@ const routes = [
                 next();
             }
         }
+        */
     },
 ];
 

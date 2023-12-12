@@ -2,7 +2,8 @@
     <div class="form">
 
         <h1>Add Post</h1>
-        <p>Body</p><label for="body">body</label>
+        <label for="body">body</label> <input name="body" required><br>
+        <button @click='this.$router.push("/")' class="center">Add</button>
 
     </div>
 </template>
