@@ -2,14 +2,11 @@
   <div>
     <div class="signup-content">
       <form @submit.prevent="submitForm" class="login-form">
-        <input type="email" placeholder="Email" required><br><br>
+        <input type="email" placeholder="Email" required v-model="email"><br><br>
         <input type="password" placeholder="Password" v-model="password" required><br><br>
-        <button type="submit" id="login-button">Log In</button>
+        <button type="submit" id="login-button">Sign Up</button>
         <div v-if="!isPasswordValid" class="validation-message">{{ validationMessage }}</div>
       </form>
-      <div id="forgot-password">
-        <a href="https://www.nhs.uk/conditions/dementia/symptoms-and-diagnosis/symptoms/" target="_blank" rel="noopener noreferrer">Forgot Password?</a>
-      </div>
     </div>
   </div>
 </template>
@@ -25,6 +22,7 @@ export default {
   },
   data() {
     return {
+      email: '',
       password: '',
       isPasswordValid: true,
       validationMessage: '',
@@ -32,14 +30,15 @@ export default {
   },
   methods: {
     submitForm() {
+      
+
       // Password validation
       if (!this.validatePassword()) {
         this.isPasswordValid = false;
         return;
       }
-
-      // Navigate to MainView.vue if the password is valid
-      this.$router.push('/Main');
+      // Sign up logic
+      this.signUp();
     },
 
     validatePassword() {
@@ -78,6 +77,33 @@ export default {
 
       this.validationMessage = 'Success';
       return true;
+    },
+
+    signUp() {
+      if (this.validatePassword()) {
+        var data = {
+          email: this.email,
+          password: this.password
+        };
+
+        fetch("http://localhost:3000/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: 'include',
+          body: JSON.stringify(data),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          this.$router.push("/");
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log("error");
+        });
+      }
     },
   },
 };
@@ -124,17 +150,5 @@ button:hover {
   color: #e74c3c;
   margin-top: 10px;
   text-align: center;
-}
-#forgot-password {
-  text-align: center;
-  margin: 10px;
-  padding: 10px;
-}
-a{
-  text-decoration: none;
-  color: black;
-}
-a:hover{
-  text-decoration: underline;
 }
 </style>

@@ -1,15 +1,8 @@
 <template>
   <li class="post-item">
     <div class="post-content">
-      <div class="post-profile">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/512px-Windows_10_Default_Profile_Picture.svg.png" class="profile-picture"/>
-        <p class="profile-name">{{ post.author }}</p>
-      </div>
       <div class="post-text">
         <p>{{ post.content }}</p>
-        <div v-if="post.picture" class="post-image-container">
-          <img :src="post.picture" :alt="'Image for Post ' + post.ID" class="post-image" />
-        </div>
         <p class="post-info">
           <strong>Date:</strong> {{ post.date }}
         </p>
@@ -32,13 +25,14 @@ export default {
 
 <style scoped>
 .post-item {
-  box-shadow: 0 0 10px rgba(0,0,0,0.37);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
   border-radius: 8px;
   margin-bottom: 16px;
   overflow: hidden;
-  position: relative; 
+  position: relative;
   z-index: 1;
 }
+
 .post-profile {
   display: flex;
   align-items: center;
