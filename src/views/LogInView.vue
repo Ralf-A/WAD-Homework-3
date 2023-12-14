@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import login from "@/services/login";
+
 export default {
   name: "LogIn",
 
@@ -26,38 +28,16 @@ export default {
     }
   },
   methods: {
-    LogIn() {
-      var data = {
-        email: this.email,
-        password: this.password
-      };
+    async LogIn() {
+      const { success, message } = await login(this.email, this.password);
 
-      // using Fetch - post method - send an HTTP post request to the specified URI with the defined body
-      fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: 'include', // Don't forget to specify this if you need cookies
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-
-          // Check for a successful login response based on the presence of user_id
-          if (data.user_id) {
-            // Redirect only if the login was successful
-            this.$router.push("/");
-          } else {
-            // Handle unsuccessful login (display an error message, etc.)
-            this.validationMessage = 'Invalid email or password'; // Set validation message
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log("error");
-        });
+      if (success) {
+        // Redirect only if the login was successful
+        this.$router.push("/");
+      } else {
+        // Handle unsuccessful login (display an error message, etc.)
+        this.validationMessage = message;
+      }
     },
   },
 }

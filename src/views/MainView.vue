@@ -1,7 +1,8 @@
 <template>
   <div>
     <div id="posts-container">
-      <ul class="post-list" v-if="posts.length">
+      <button @click="logout">Logout</button>
+      <ul class="post-list" v-if="posts && posts.length">
         <!-- Use router-link to make each post clickable -->
         <router-link
           v-for="post in posts"
@@ -29,13 +30,13 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Post from "@/components/Post.vue";
 import { mapState, mapActions } from 'vuex';
+import logout from '@/services/logout';
 
 export default {
   computed: {
     ...mapState(['posts']),
     loading() {
-      // Add a computed property for loading state
-      return this.posts.length === 0;
+      return this.posts ? this.posts.length === 0 : true;
     },
   },
   components: {
@@ -48,8 +49,10 @@ export default {
   },
   methods: {
     ...mapActions(['fetchPosts', 'deleteAllPosts']),
+    async logout() {
+      await logout(); // Call the logout method from the service
+    },
     handleDeleteAllPosts() {
-      // Call the deleteAllPosts action when the button is clicked
       this.deleteAllPosts();
     },
   },
