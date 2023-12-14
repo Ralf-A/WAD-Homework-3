@@ -1,9 +1,6 @@
 <template>
   <div>
     <div id="posts-container">
-      <router-link :to="{ name: 'AddPost' }">
-        <button>Add Post</button>
-      </router-link>
       <ul class="post-list" v-if="posts.length">
         <!-- Use router-link to make each post clickable -->
         <router-link
@@ -14,14 +11,15 @@
           <Post :post="post" />
         </router-link>
       </ul>
-      <div v-else-if="loading">
+
+      <div v-if="loading">
         <!-- Loading indicator or message -->
         Loading...
       </div>
-      <div v-else>
-        <!-- Message when there are no posts -->
-        No posts available.
-      </div>
+      <router-link :to="{ name: 'AddPost' }">
+        <button>Add Post</button>
+      </router-link>
+      <button @click="handleDeleteAllPosts">Delete All Posts</button>
     </div>
   </div>
 </template>
@@ -49,7 +47,11 @@ export default {
     this.fetchPosts();
   },
   methods: {
-    ...mapActions(['fetchPosts']),
+    ...mapActions(['fetchPosts', 'deleteAllPosts']),
+    handleDeleteAllPosts() {
+      // Call the deleteAllPosts action when the button is clicked
+      this.deleteAllPosts();
+    },
   },
 };
 </script>

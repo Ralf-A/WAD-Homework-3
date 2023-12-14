@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     submitForm() {
-      
+
 
       // Password validation
       if (!this.validatePassword()) {
@@ -79,33 +79,56 @@ export default {
       return true;
     },
 
-    signUp() {
-      if (this.validatePassword()) {
-        var data = {
-          email: this.email,
-          password: this.password
-        };
+    async signUp() {
+  if (this.validatePassword()) {
+    const data = {
+      email: this.email,
+      password: this.password
+    };
 
-        fetch("http://localhost:3000/auth/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          this.$router.push("/");
-        })
-        .catch((e) => {
-          console.log(e);
-          console.log("error");
-        });
+    try {
+      const response = await fetch("http://localhost:3000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      });
+
+      // Check if the response status is not okay
+      if (!response.ok) {
+        if (response.headers.get('content-type')?.includes('application/json')) {
+          // If the response is JSON, try to parse it
+          const responseData = await response.json();
+          console.error(responseData);
+
+          // Check for specific error messages
+          if (responseData.error && responseData.error.message) {
+            this.validationMessage = responseData.error.message;
+          } else {
+            this.validationMessage = 'An error occurred during signup.';
+          }
+        } else {
+          // If the response is not JSON, handle accordingly
+          console.error('Non-JSON response:', response.statusText);
+          this.validationMessage = 'An error occurred during signup.';
+        }
+        this.isPasswordValid = false;
+        return;
       }
-    },
-  },
+
+      console.log('Success:', await response.json());
+      this.$router.push("/");
+    } catch (error) {
+      // Handle other errors (e.g., network error)
+      console.error('Error during signup:', error);
+      this.validationMessage = 'An error occurred during signup.';
+      this.isPasswordValid = false;
+    }
+    }
+  }
+  }
 };
 </script>
 

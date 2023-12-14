@@ -6,10 +6,14 @@
         <input type="password" placeholder="Password" name="password" required v-model="password"><br><br>
         <button @click="LogIn">Log In</button><br>
         <button @click='this.$router.push("/signup")'>Create an account!</button>
+
+        <!-- Display validation message -->
+        <div v-if="validationMessage" class="validation-message">{{ validationMessage }}</div>
       </form>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "LogIn",
@@ -18,6 +22,7 @@ export default {
     return {
       email: '',
       password: '',
+      validationMessage: '', // New property to hold validation message
     }
   },
   methods: {
@@ -46,7 +51,7 @@ export default {
             this.$router.push("/");
           } else {
             // Handle unsuccessful login (display an error message, etc.)
-            console.log("Login failed");
+            this.validationMessage = 'Invalid email or password'; // Set validation message
           }
         })
         .catch((e) => {

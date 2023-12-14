@@ -105,6 +105,25 @@ export default createStore({
         console.error('Error creating post:', error);
       }
     },
+    async deleteAllPosts({ commit }) {
+      try {
+        // Make a request to delete all posts
+        const response = await fetch('http://localhost:3000/api/deleteAllPosts', {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Commit the mutation to update the state and remove all posts
+        commit('deleteAllPosts');
+
+        console.log('All posts deleted successfully');
+      } catch (error) {
+        console.error('Error deleting all posts:', error);
+      }
+    },
   },
   mutations: {
     setPosts(state, posts) {
@@ -122,5 +141,8 @@ export default createStore({
     addPost(state, newPost) {
       state.posts = [newPost, ...state.posts];
     },
+    deletePosts(state) {
+      state.posts = [];
+    }
   },
 });
