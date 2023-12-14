@@ -74,6 +74,37 @@ export default createStore({
         console.error('Error updating post:', error);
       }
     },
+    async createPost({ commit }, body) {
+      try {
+        const currentDate = new Date().toISOString();
+
+        // Make a request to create a new post
+        const response = await fetch('http://localhost:3000/api/createPost', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            body,
+            date: currentDate,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON response
+        const newPost = await response.json();
+
+        // Commit the mutation to update the state with the new post
+        commit('addPost', newPost);
+
+        console.log('Post created successfully:', newPost);
+      } catch (error) {
+        console.error('Error creating post:', error);
+      }
+    },
   },
   mutations: {
     setPosts(state, posts) {
@@ -87,6 +118,9 @@ export default createStore({
     },
     updatePost(state, updatedPost) {
       state.currentPost = updatedPost;
+    },
+    addPost(state, newPost) {
+      state.posts = [newPost, ...state.posts];
     },
   },
 });
