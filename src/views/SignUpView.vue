@@ -2,8 +2,8 @@
   <div>
     <div class="signup-content">
       <form @submit.prevent="submitForm" class="login-form">
-        <input type="email" placeholder="Email" required v-model="email"><br><br>
-        <input type="password" placeholder="Password" v-model="password" required><br><br>
+        <input type="email" placeholder="Email" name="email" required v-model="email"><br><br>
+        <input type="password" placeholder="Password" name="password" v-model="password" required><br><br>
         <button type="submit" id="login-button">Sign Up</button>
         <div v-if="!isPasswordValid" class="validation-message">{{ validationMessage }}</div>
       </form>

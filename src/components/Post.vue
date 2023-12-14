@@ -2,7 +2,7 @@
   <li class="post-item">
     <div class="post-content">
       <div class="post-text">
-        <p>{{ post.content }}</p>
+        <p>{{ post.body }}</p>
         <p class="post-info">
           <strong>Date:</strong> {{ post.date }}
         </p>
@@ -19,6 +19,9 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  created() {
+    console.log('Received post data:', this.post);
   },
 };
 </script>

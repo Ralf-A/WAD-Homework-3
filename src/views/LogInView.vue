@@ -1,110 +1,103 @@
 <template>
-  <div class="form">
-    <h3>LogIn</h3>
-    <label for="email">Email</label>
-    <input type="email" name="email"  required v-model="email">
-    <label for="password">Password</label>
-    <input type="password" name="password" required v-model="password">
-    <div class="container">
-      <button @click="LogIn"  class="center">LogIn</button>
-      <button @click='this.$router.push("/signup")' class="center">Signup</button>
+  <div>
+    <div class="signup-content">
+      <form @submit.prevent="submitForm" class="login-form">
+        <input type="email" placeholder="Email" name="email" required v-model="email"><br><br>
+        <input type="password" placeholder="Password" name="password" required v-model="password"><br><br>
+        <button @click="LogIn">Log In</button><br>
+        <button @click='this.$router.push("/signup")'>Create an account!</button>
+      </form>
     </div>
   </div>
 </template>
-
 <script>
 export default {
-name: "LogIn", 
+  name: "LogIn",
 
-data: function() {
+  data: function () {
     return {
-   email: '',
-   password: '',
-  }
+      email: '',
+      password: '',
+    }
   },
   methods: {
-
-
-LogIn() {
+    LogIn() {
       var data = {
         email: this.email,
         password: this.password
       };
+
       // using Fetch - post method - send an HTTP post request to the specified URI with the defined body
       fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-          credentials: 'include', //  Don't forget to specify this if you need cookies
-          body: JSON.stringify(data),
+        credentials: 'include', // Don't forget to specify this if you need cookies
+        body: JSON.stringify(data),
       })
-      .then((response) => response.json())
-      .then((data) => {
-      console.log(data);
-      //this.$router.push("/");
-      location.assign("/");
-      })
-      .catch((e) => {
-        console.log(e);
-        console.log("error");
-      });
-    },
-  }, 
-  }
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
 
+          // Check for a successful login response based on the presence of user_id
+          if (data.user_id) {
+            // Redirect only if the login was successful
+            this.$router.push("/");
+          } else {
+            // Handle unsuccessful login (display an error message, etc.)
+            console.log("Login failed");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          console.log("error");
+        });
+    },
+  },
+}
 </script>
 
 <style scoped>
-.form {
-  max-width: 420px;
-  margin: 30px auto;
-  background: rgb(167, 154, 154);
-  text-align: left;
-  padding: 40px;
-  border-radius: 10px;
+.signup-content {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
+  border-radius: 8px;
+  background-color: #fff;
 }
-h3 {
-  text-align: center;
-  color: rgb(8, 110, 110);
-}
-label {
-  color: rgb(8, 110, 110);
-  display: inline-block;
-  margin: 25px 0 15px;
-  font-size: 0.8em;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-input {
-  display: block;
-  padding: 10px 6px;
-  width: 100%;
-  box-sizing: border-box;
-  border: none;
-  border-bottom: 1px solid white;
-  color: blue;
-}
-button {
-  background: rgb(8, 110, 110);
-  border: 0;
-  padding: 10px 20px;
-  margin: 20px 20px 20px 20px;
-  color: white;
-  border-radius: 20px;
-  align-items: center;
-  text-align: center;
-}
-.center {
-  margin: auto;
-  border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
-  width: 30%; 
-}
-.container {
+
+.login-form {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: rgb(32, 248, 237);
+  color: #000000;
+  padding: 10px;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(22, 228, 217);
+}
+
+.validation-message {
+  color: #e74c3c;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>

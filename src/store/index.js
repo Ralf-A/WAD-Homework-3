@@ -1,4 +1,3 @@
-// store/index.js
 import { createStore } from 'vuex';
 
 export default createStore({
@@ -8,12 +7,21 @@ export default createStore({
   actions: {
     async fetchPosts({ commit }) {
       try {
-        const response = await fetch('https://gist.githubusercontent.com/Ralf-A/bd247c4126a4af73edb3fd21c4e8e22f/raw/e6273bba855f831466e028cfb93f13056ce1a7aa/data.json');
+        // Make a fetch request to your server API
+        const response = await fetch('http://localhost:3000/api/receivePosts');
+        
+        // Check if the response status is okay (e.g., 200)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the JSON response
         const data = await response.json();
 
-        // Assuming data.posts is the array of posts
-        const posts = data.posts;
+        // Assuming data is an array of posts
+        const posts = data;
 
+        // Commit the mutation to update the state with the fetched posts
         commit('setPosts', posts);
       } catch (error) {
         console.error('Error fetching data:', error);
