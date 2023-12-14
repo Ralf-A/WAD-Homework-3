@@ -2,7 +2,14 @@
     <div>
       <div id="posts-container">
         <ul class="post-list" v-if="posts.length">
-          <Post v-for="post in posts" :key="post.id" :post="post" />
+          <!-- Use router-link to make each post clickable -->
+          <router-link
+            v-for="post in posts"
+            :key="post.id"
+            :to="{ name: 'PostDetail', params: { postId: post.id } }"
+          >
+            <Post :post="post" />
+          </router-link>
         </ul>
         <div v-else-if="loading">
           <!-- Loading indicator or message -->
@@ -15,8 +22,6 @@
       </div>
     </div>
   </template>
-
-
   
   <script>
   import Header from "@/components/Header.vue";

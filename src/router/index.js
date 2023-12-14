@@ -4,7 +4,7 @@ import SignUp from "../views/SignUpView.vue";
 import LogIn from "../views/LogInView.vue";
 import ContactUs from "../views/ContactUs.vue";
 import addPost from "../views/addPostView.vue";
-import updatePost from "../views/updatePostView.vue";
+import PostDetailView from '@/views/PostDetailView.vue';
 import auth from "../auth";
 
 const routes = [
@@ -29,10 +29,11 @@ const routes = [
         component: addPost,
     },
     {
-        path: "/post/:id",
-        name: "UpdatePost",
-        component: updatePost,
-    },
+        path: '/post/:postId',
+        name: 'PostDetail',
+        component: PostDetailView,
+        props: true,
+      },
     {
         path: "/",
         name: "main",

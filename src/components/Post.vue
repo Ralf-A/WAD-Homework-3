@@ -4,13 +4,12 @@
       <div class="post-text">
         <p>{{ post.body }}</p>
         <p class="post-info">
-          <strong>Date:</strong> {{ post.date }}
+          <strong>Date:</strong> {{ formatDate(post.date) }}
         </p>
       </div>
     </div>
   </li>
 </template>
-
 
 <script>
 export default {
@@ -23,9 +22,15 @@ export default {
   created() {
     console.log('Received post data:', this.post);
   },
+  methods: {
+    formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const date = new Date(dateString);
+      return date.toLocaleDateString(undefined, options);
+    },
+  },
 };
 </script>
-
 <style scoped>
 .post-item {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
