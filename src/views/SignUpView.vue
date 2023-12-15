@@ -15,6 +15,7 @@
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import signupService from "@/services/signup";
+import { validatePassword } from "@/services/signup";
 
 export default {
   components: {
@@ -32,8 +33,11 @@ export default {
   methods: {
     async submitForm() {
       // Password validation
-      if (!this.validatePassword()) {
+      const passwordValidationResult = validatePassword(this.password);
+
+      if (passwordValidationResult !== 'Success') {
         this.isPasswordValid = false;
+        this.validationMessage = passwordValidationResult;
         return;
       }
 
@@ -47,45 +51,6 @@ export default {
         // Handle unsuccessful signup (display an error message, etc.)
         this.validationMessage = message;
       }
-    },
-
-
-    validatePassword() {
-      const password = this.password;
-
-      // Check the password is correct
-      if (password.length < 8 || password.length >= 15) {
-        this.validationMessage = 'Password must be between 8 and 15 characters.';
-        return false;
-      }
-
-      if (!/[A-Z]/.test(password)) {
-        this.validationMessage = 'Password must include at least one uppercase letter.';
-        return false;
-      }
-
-      if ((password.match(/[a-z]/g) || []).length < 2) {
-        this.validationMessage = 'Password must include at least two lowercase letters.';
-        return false;
-      }
-
-      if (!/\d/.test(password)) {
-        this.validationMessage = 'Password must include at least one numeric value.';
-        return false;
-      }
-
-      if (!/^[A-Z]/.test(password)) {
-        this.validationMessage = 'Password must start with an uppercase letter.';
-        return false;
-      }
-
-      if (!/_/.test(password)) {
-        this.validationMessage = 'Password must include the character "_".';
-        return false;
-      }
-
-      this.validationMessage = 'Success';
-      return true;
     },
   }
 };
